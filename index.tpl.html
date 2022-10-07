@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <title>Twitch-Bot Rules Archive</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" integrity="sha256-KTPJY0ik6ufLv48oDKCYFYaptcCX75UrmWytfSjy+tA=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.1/dist/darkly/bootstrap.min.css" integrity="sha256-7mvDKMLoBU3B5Sj1sW2i33B9hPz1VSE9whs1QDJj01I=" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row mt-3">
+        <div class="col">
+
+          <table class="table table-hover table-striped">
+            <tr>
+              <td>Rule</td>
+              <td>Description</td>
+              <td>Req. Bot<br>Version</td>
+            </tr>
+            {% for rule in rules %}
+            <tr>
+              <td>
+                <a
+                  data-bs-title="Click to Copy Subscribe-URL"
+                  data-bs-toggle="tooltip"
+                  href="{{ rule_base }}{{ rule.file }}"
+                  onclick="navigator.clipboard.writeText('{{ rule_base }}{{ rule.file }}'); return false;"
+                >
+                  {{ rule.shortened_id }}&hellip;
+                </a>
+                <p class="text-muted">
+                  <small><b>by</b> {{ rule.author }}</small><br>
+                  <small><b>ver</b> {{ rule.version}}</small>
+                </p>
+              </td>
+              <td>
+                <p>{{ rule.description }}</p>
+                <p>
+                {% for action in rule.actions %}
+                <span class="badge bg-secondary">{{ action }}</span>
+                {% endfor %}
+                </p>
+              </td>
+              <td>{{ rule.min_bot_ver }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-qFsv4wd3fI60fwah7sOZ/L3f6D0lL9IC0+E1gFH88n0=" crossorigin="anonymous"></script>
+    <script>
+      window.addEventListener('load', () => {
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+      })
+    </script>
+  </body>
+</html>

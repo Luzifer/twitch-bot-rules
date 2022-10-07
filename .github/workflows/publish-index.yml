@@ -1,0 +1,67 @@
+---
+
+name: Deploy Rules Index
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-publish:
+    container:
+      image: luzifer/archlinux
+
+    defaults:
+      run:
+        shell: bash
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install required packages
+        run: |
+          pacman -Syy --noconfirm \
+            git \
+            python \
+            python-pip \
+            make \
+            tar \
+            yamllint \
+            yq
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Lint rules files
+        run: make rules_lint
+
+      - name: Build rules index
+        run: make index
+
+      - name: Setup Pages
+        if: github.ref_name == 'main'
+        uses: actions/configure-pages@v2
+
+      - name: Upload artifact
+        if: github.ref_name == 'main'
+        uses: actions/upload-pages-artifact@v1
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        if: github.ref_name == 'main'
+        uses: actions/deploy-pages@v1
+
+...
