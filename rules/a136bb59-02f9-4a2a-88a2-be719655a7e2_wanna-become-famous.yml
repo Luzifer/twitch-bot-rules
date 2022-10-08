@@ -2,7 +2,7 @@
 
 # @author Luzifer
 # @minBotVersion v3.0
-# @version v1
+# @version v2
 
 uuid: a136bb59-02f9-4a2a-88a2-be719655a7e2
 subscribe_from: https://github.com/Luzifer/twitch-bot-rules/raw/main/rules/a136bb59-02f9-4a2a-88a2-be719655a7e2_wanna-become-famous.yml
@@ -14,7 +14,7 @@ actions:
     attributes:
       reason: Chat-Spam "{{ group 1 }}"
 
-match_message: (?i)(.*(?:Buy|Best)?(?:\s+(?:followers|primes|viewers)\s*(?:,|and|)){2,}\s+on.*)
+match_message: (?i)(.*(?:Buy|Best)?(?:\s*(?:followers|primes|viewers)\s*(?:,|and|)){2,}\s+on.*)
 
 disable_on_template: '{{ not (botHasBadge "moderator") }}'
 
