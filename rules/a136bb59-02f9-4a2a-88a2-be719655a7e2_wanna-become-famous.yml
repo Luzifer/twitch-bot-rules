@@ -14,7 +14,7 @@ actions:
     attributes:
       reason: Chat-Spam "{{ group 1 }}"
 
-match_message: (?i)((?:.*(?:Buy|Best|all for your stream:?)?(?:\s*(?:follow(?:ers|)|primes|primesubs|viewers?)\s*(?:,|and|)){2,}\s+on.*)|tss\.+ all for your stream on.*)
+match_message: (?i)((?:.*(?:Buy|Best|all for your stream:?)?(?:\s*(?:follow(?:ers|)|primes|primesubs|viewers?)\s*(?:,|and|)){2,}\s+on.*)|(?:tss\.+ )?all for your stream on.*)
 
 disable_on_template: '{{ not (botHasBadge "moderator") }}'
 
